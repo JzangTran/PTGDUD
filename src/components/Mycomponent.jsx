@@ -1,6 +1,7 @@
 import React from "react";
 import DisplayInfo from "./DisplayInfor";
 import AddUserInfor from "./AddUserInfor";
+import Childcomponent from "./Childcomponent";
 
 
 class Mycomponent extends React.Component {
@@ -22,6 +23,15 @@ class Mycomponent extends React.Component {
         console.log(this.state.listUser);
     }
 
+    handleDeleteUser = (userID) => {
+        let listUserClone=[...this.state.listUser]
+        
+        listUserClone = listUserClone.filter(item => item.id !== userID)
+         this.setState({
+            listUser: listUserClone
+        })
+    }
+
     render() {
 
         return (
@@ -30,6 +40,7 @@ class Mycomponent extends React.Component {
                 <hr></hr>
                 <DisplayInfo 
                     listUser = {this.state.listUser}
+                    handleDeleteUser={this.handleDeleteUser}
                 ></DisplayInfo>
             </div>
         );
