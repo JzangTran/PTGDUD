@@ -1,17 +1,34 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
-class DisplayInfo extends React.Component {
-    constructor(props) {
-        super();
-        this.props = props
+const DisplayInfo = (props) => {
+    const {listUser} = props;
+    const [isShowHideListUser, setShowHideListUser] = useState(true);
+
+    useEffect(
+        () => {
+            if (listUser.length === 0)
+                alert("You deleted all users")
+            console.log("call useeffect");
+        }, 
+        [listUser]
+    );
+
+
+    const handleShowHideListUser = () => {
+        setShowHideListUser(!isShowHideListUser);
     }
+    
+    console.log('re-render');
+    
+    return (
+        <div>
+            <div>
+                <span onClick={() => handleShowHideListUser()}>
+                    {isShowHideListUser === true? "Hide list User":"Show list User"}
+                </span>
+            </div>
 
-    render() {
-        const {listUser} = this.props;
-
-        console.log(listUser);
-        return (
-            <div className="list-info">
+            <div style={{display:isShowHideListUser?'block':'none'}} className="list-info">
                 {listUser.map((user) => {
                     return (
                         <div
@@ -21,15 +38,16 @@ class DisplayInfo extends React.Component {
                             <div>My name: {user.name}</div>
                             <div>My age: {user.age}</div>
                             <button onClick={() => {
-                                this.props.handleDeleteUser(user.id)
+                                props.handleDeleteUser(user.id)
                             }}>Delete</button>
                         </div>
                     );
-                })}
-            </div>
-        );
-    }
-
+            })}
+        </div>
+        </div>
+        
+        
+    );
 }
 
 export default DisplayInfo;
